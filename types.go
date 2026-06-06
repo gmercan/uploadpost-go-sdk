@@ -26,27 +26,27 @@ type VideoOptions struct {
 	Platforms []string // e.g. []string{"tiktok", "instagram", "youtube"}
 
 	// ── Common optional ───────────────────────────────────────────────────────
-	Title        string
-	Description  string
-	FirstComment string
-	AltText      string
-	ScheduledDate string // ISO 8601, e.g. "2024-12-25T10:00:00Z"
-	Timezone      string // e.g. "Europe/Madrid"
-	AddToQueue    *bool
-	MaxPostsPerSlot *int
-	AsyncUpload   *bool
+	Title             string
+	Description       string
+	FirstComment      string
+	AltText           string
+	ScheduledDate     string // ISO 8601, e.g. "2024-12-25T10:00:00Z"
+	Timezone          string // e.g. "Europe/Madrid"
+	AddToQueue        *bool
+	MaxPostsPerSlot   *int
+	AsyncUpload       *bool
 	FirstCommentMedia []string // local file paths or URLs
 
 	// Per-platform title overrides
-	BlueskyTitle    string
-	InstagramTitle  string
-	FacebookTitle   string
-	TiktokTitle     string
-	LinkedinTitle   string
-	XTitle          string
-	YoutubeTitle    string
-	PinterestTitle  string
-	ThreadsTitle    string
+	BlueskyTitle   string
+	InstagramTitle string
+	FacebookTitle  string
+	TiktokTitle    string
+	LinkedinTitle  string
+	XTitle         string
+	YoutubeTitle   string
+	PinterestTitle string
+	ThreadsTitle   string
 
 	// Per-platform description overrides
 	LinkedinDescription  string
@@ -66,8 +66,8 @@ type VideoOptions struct {
 	LinkedinFirstComment  string
 
 	// ── TikTok ────────────────────────────────────────────────────────────────
-	TiktokPrivacyLevel  string // PUBLIC_TO_EVERYONE | MUTUAL_FOLLOW_FRIENDS | FOLLOWER_OF_CREATOR | SELF_ONLY
-	TiktokDisableDuet   *bool
+	TiktokPrivacyLevel   string // PUBLIC_TO_EVERYONE | MUTUAL_FOLLOW_FRIENDS | FOLLOWER_OF_CREATOR | SELF_ONLY
+	TiktokDisableDuet    *bool
 	TiktokDisableComment *bool
 	TiktokDisableStitch  *bool
 	TiktokCoverTimestamp *int64 // milliseconds
@@ -77,50 +77,50 @@ type VideoOptions struct {
 	BrandOrganicToggle   *bool
 
 	// ── Instagram ─────────────────────────────────────────────────────────────
-	InstagramMediaType    string // REELS | STORIES
-	InstagramShareToFeed  *bool
+	InstagramMediaType     string // REELS | STORIES
+	InstagramShareToFeed   *bool
 	InstagramCollaborators string
-	InstagramCoverURL     string // URL string or local file path
-	InstagramAudioName    string
-	InstagramUserTags     string
-	InstagramLocationID   string
-	InstagramThumbOffset  string
+	InstagramCoverURL      string // URL string or local file path
+	InstagramAudioName     string
+	InstagramUserTags      string
+	InstagramLocationID    string
+	InstagramThumbOffset   string
 
 	// ── YouTube ───────────────────────────────────────────────────────────────
-	YouTubeTags                  []string
-	YouTubeCategoryID            string
-	YouTubePrivacyStatus         string // public | unlisted | private
-	YouTubeEmbeddable            *bool
-	YouTubeLicense               string // youtube | creativeCommon
-	YouTubePublicStatsViewable   *bool
-	YouTubeThumbnailURL          string
+	YouTubeTags                    []string
+	YouTubeCategoryID              string
+	YouTubePrivacyStatus           string // public | unlisted | private
+	YouTubeEmbeddable              *bool
+	YouTubeLicense                 string // youtube | creativeCommon
+	YouTubePublicStatsViewable     *bool
+	YouTubeThumbnailURL            string
 	YouTubeSelfDeclaredMadeForKids *bool
 	YouTubeContainsSyntheticMedia  *bool
-	YouTubeDefaultLanguage       string
-	YouTubeDefaultAudioLanguage  string
-	YouTubeAllowedCountries      string
-	YouTubeBlockedCountries      string
+	YouTubeDefaultLanguage         string
+	YouTubeDefaultAudioLanguage    string
+	YouTubeAllowedCountries        string
+	YouTubeBlockedCountries        string
 	YouTubeHasPaidProductPlacement *bool
-	YouTubeRecordingDate         string
-	YouTubeSubtitles             []YouTubeSubtitle
+	YouTubeRecordingDate           string
+	YouTubeSubtitles               []YouTubeSubtitle
 
 	// ── LinkedIn ──────────────────────────────────────────────────────────────
-	LinkedinVisibility    string // PUBLIC | CONNECTIONS | LOGGED_IN | CONTAINER
-	TargetLinkedinPageID  string
+	LinkedinVisibility   string // PUBLIC | CONNECTIONS | LOGGED_IN | CONTAINER
+	TargetLinkedinPageID string
 
 	// ── Facebook ──────────────────────────────────────────────────────────────
-	FacebookPageID    string
+	FacebookPageID     string
 	FacebookVideoState string // PUBLISHED | DRAFT
 	FacebookMediaType  string // REELS | STORIES | VIDEO
-	ThumbnailURL      string  // only for FacebookMediaType == "VIDEO"
+	ThumbnailURL       string // only for FacebookMediaType == "VIDEO"
 
 	// ── Pinterest ─────────────────────────────────────────────────────────────
-	PinterestBoardID              string
-	PinterestAltText              string
-	PinterestLink                 string
-	PinterestCoverImageURL        string
-	PinterestCoverImageContentType string
-	PinterestCoverImageData       string
+	PinterestBoardID                string
+	PinterestAltText                string
+	PinterestLink                   string
+	PinterestCoverImageURL          string
+	PinterestCoverImageContentType  string
+	PinterestCoverImageData         string
 	PinterestCoverImageKeyFrameTime *int
 
 	// ── X (Twitter) ───────────────────────────────────────────────────────────
@@ -149,26 +149,26 @@ type PhotosOptions struct {
 	Platforms []string
 
 	// ── Common optional ───────────────────────────────────────────────────────
-	Title        string
-	Description  string
-	FirstComment string
-	AltText      string
-	ScheduledDate string
-	Timezone      string
-	AddToQueue    *bool
-	MaxPostsPerSlot *int
-	AsyncUpload   *bool
+	Title             string
+	Description       string
+	FirstComment      string
+	AltText           string
+	ScheduledDate     string
+	Timezone          string
+	AddToQueue        *bool
+	MaxPostsPerSlot   *int
+	AsyncUpload       *bool
 	FirstCommentMedia []string
 
 	// Per-platform title overrides
-	BlueskyTitle    string
-	InstagramTitle  string
-	FacebookTitle   string
-	TiktokTitle     string
-	LinkedinTitle   string
-	XTitle          string
-	PinterestTitle  string
-	ThreadsTitle    string
+	BlueskyTitle   string
+	InstagramTitle string
+	FacebookTitle  string
+	TiktokTitle    string
+	LinkedinTitle  string
+	XTitle         string
+	PinterestTitle string
+	ThreadsTitle   string
 
 	// Per-platform description overrides
 	LinkedinDescription  string
@@ -186,17 +186,17 @@ type PhotosOptions struct {
 	LinkedinFirstComment  string
 
 	// ── TikTok ────────────────────────────────────────────────────────────────
-	TiktokAutoAddMusic   *bool
-	TiktokDisableComment *bool
+	TiktokAutoAddMusic    *bool
+	TiktokDisableComment  *bool
 	TiktokPhotoCoverIndex *int
-	BrandContentToggle   *bool
-	BrandOrganicToggle   *bool
+	BrandContentToggle    *bool
+	BrandOrganicToggle    *bool
 
 	// ── Instagram ─────────────────────────────────────────────────────────────
-	InstagramMediaType    string // IMAGE | STORIES
+	InstagramMediaType     string // IMAGE | STORIES
 	InstagramCollaborators string
-	InstagramUserTags     string
-	InstagramLocationID   string
+	InstagramUserTags      string
+	InstagramLocationID    string
 
 	// ── LinkedIn ──────────────────────────────────────────────────────────────
 	LinkedinVisibility   string
@@ -240,21 +240,21 @@ type TextOptions struct {
 	Title     string // the text content of the post
 
 	// ── Common optional ───────────────────────────────────────────────────────
-	FirstComment string
-	ScheduledDate string
-	Timezone      string
-	AddToQueue    *bool
-	MaxPostsPerSlot *int
-	AsyncUpload   *bool
+	FirstComment      string
+	ScheduledDate     string
+	Timezone          string
+	AddToQueue        *bool
+	MaxPostsPerSlot   *int
+	AsyncUpload       *bool
 	FirstCommentMedia []string
 
 	// Per-platform title overrides
-	BlueskyTitle   string
-	FacebookTitle  string
-	TiktokTitle    string
-	LinkedinTitle  string
-	XTitle         string
-	ThreadsTitle   string
+	BlueskyTitle  string
+	FacebookTitle string
+	TiktokTitle   string
+	LinkedinTitle string
+	XTitle        string
+	ThreadsTitle  string
 
 	// Per-platform first-comment overrides
 	FacebookFirstComment string
@@ -350,15 +350,15 @@ type ImpressionsOptions struct {
 
 // JWTOptions contains options for GenerateJWT.
 type JWTOptions struct {
-	RedirectURL         string
-	LogoImage           string
-	RedirectButtonText  string
-	Platforms           []string
-	ShowCalendar        *bool
-	ReadonlyCalendar    *bool
-	ConnectTitle        string
-	ConnectDescription  string
-	Language            string // en | es | de | fr | pt
+	RedirectURL        string
+	LogoImage          string
+	RedirectButtonText string
+	Platforms          []string
+	ShowCalendar       *bool
+	ReadonlyCalendar   *bool
+	ConnectTitle       string
+	ConnectDescription string
+	Language           string // en | es | de | fr | pt
 }
 
 // UserPreferencesOptions contains options for UpdateUserPreferences.
@@ -380,11 +380,11 @@ type EditScheduledOptions struct {
 
 // AutoDMOptions contains options for StartAutoDM.
 type AutoDMOptions struct {
-	PostURL             string   // Required: Instagram post URL
-	ReplyMessage        string   // Required: DM message to send
-	ProfileUsername     string   // Required: profile username
-	MonitoringInterval  *int     // minutes, default 15, minimum 15
-	TriggerKeywords     []string // optional keyword filter
+	PostURL            string   // Required: Instagram post URL
+	ReplyMessage       string   // Required: DM message to send
+	ProfileUsername    string   // Required: profile username
+	MonitoringInterval *int     // minutes, default 15, minimum 15
+	TriggerKeywords    []string // optional keyword filter
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -446,16 +446,16 @@ type ImpressionsResponse struct {
 
 // PostAnalyticsPlatform holds per-platform analytics for a single post.
 type PostAnalyticsPlatform struct {
-	Success                 bool                   `json:"success"`
-	PlatformPostID          string                 `json:"platform_post_id,omitempty"`
-	PostURL                 string                 `json:"post_url,omitempty"`
-	PostMetrics             map[string]interface{} `json:"post_metrics,omitempty"`
-	PostMetricsSource       string                 `json:"post_metrics_source,omitempty"`
-	PostMetricsError        string                 `json:"post_metrics_error,omitempty"`
-	ProfileSnapshotAtPost   map[string]interface{} `json:"profile_snapshot_at_post_date,omitempty"`
-	ProfileSnapshotLatest   map[string]interface{} `json:"profile_snapshot_latest,omitempty"`
-	ProfileSnapshotDate     string                 `json:"profile_snapshot_latest_date,omitempty"`
-	ErrorMessage            string                 `json:"error_message,omitempty"`
+	Success               bool                   `json:"success"`
+	PlatformPostID        string                 `json:"platform_post_id,omitempty"`
+	PostURL               string                 `json:"post_url,omitempty"`
+	PostMetrics           map[string]interface{} `json:"post_metrics,omitempty"`
+	PostMetricsSource     string                 `json:"post_metrics_source,omitempty"`
+	PostMetricsError      string                 `json:"post_metrics_error,omitempty"`
+	ProfileSnapshotAtPost map[string]interface{} `json:"profile_snapshot_at_post_date,omitempty"`
+	ProfileSnapshotLatest map[string]interface{} `json:"profile_snapshot_latest,omitempty"`
+	ProfileSnapshotDate   string                 `json:"profile_snapshot_latest_date,omitempty"`
+	ErrorMessage          string                 `json:"error_message,omitempty"`
 }
 
 // PostAnalyticsPost holds metadata about the uploaded post.
@@ -470,9 +470,9 @@ type PostAnalyticsPost struct {
 
 // PostAnalyticsResponse is returned by GetPostAnalytics.
 type PostAnalyticsResponse struct {
-	Success   bool                               `json:"success"`
-	Post      PostAnalyticsPost                  `json:"post,omitempty"`
-	Platforms map[string]PostAnalyticsPlatform   `json:"platforms,omitempty"`
+	Success   bool                             `json:"success"`
+	Post      PostAnalyticsPost                `json:"post,omitempty"`
+	Platforms map[string]PostAnalyticsPlatform `json:"platforms,omitempty"`
 }
 
 // PlatformMetric describes available metrics for a single platform.
@@ -614,17 +614,17 @@ type ReplyResponse struct {
 
 // AutoDMMonitor represents a single AutoDM monitor.
 type AutoDMMonitor struct {
-	MonitorID          string `json:"monitor_id,omitempty"`
-	PostURL            string `json:"post_url,omitempty"`
-	Status             string `json:"status,omitempty"` // running | paused | resuming | stopped | expired
-	ReplyMessage       string `json:"reply_message,omitempty"`
-	ProfileUsername    string `json:"profile_username,omitempty"`
-	MonitoringInterval int    `json:"monitoring_interval,omitempty"`
+	MonitorID          string   `json:"monitor_id,omitempty"`
+	PostURL            string   `json:"post_url,omitempty"`
+	Status             string   `json:"status,omitempty"` // running | paused | resuming | stopped | expired
+	ReplyMessage       string   `json:"reply_message,omitempty"`
+	ProfileUsername    string   `json:"profile_username,omitempty"`
+	MonitoringInterval int      `json:"monitoring_interval,omitempty"`
 	TriggerKeywords    []string `json:"trigger_keywords,omitempty"`
-	CreatedAt          string `json:"created_at,omitempty"`
-	StoppedAt          string `json:"stopped_at,omitempty"`
-	StopReason         string `json:"stop_reason,omitempty"`
-	IsActive           bool   `json:"is_active"`
+	CreatedAt          string   `json:"created_at,omitempty"`
+	StoppedAt          string   `json:"stopped_at,omitempty"`
+	StopReason         string   `json:"stop_reason,omitempty"`
+	IsActive           bool     `json:"is_active"`
 }
 
 // AutoDMStatusResponse is returned by GetAutoDMStatus.
@@ -706,8 +706,8 @@ type QueuePreviewResponse struct {
 
 // NextQueueSlotResponse is returned by GetNextQueueSlot.
 type NextQueueSlotResponse struct {
-	Success   bool    `json:"success"`
-	NextSlot  *string `json:"next_slot"` // null when no slot available within 30 days
+	Success  bool    `json:"success"`
+	NextSlot *string `json:"next_slot"` // null when no slot available within 30 days
 }
 
 // UpdateQueueSettingsOptions contains options for UpdateQueueSettings.
@@ -765,20 +765,20 @@ type SendDMResponse struct {
 
 // RedditPostMedia holds media details for a Reddit post.
 type RedditPostMedia struct {
-	Type     string `json:"type,omitempty"`      // image | video | external_video
+	Type     string `json:"type,omitempty"` // image | video | external_video
 	URL      string `json:"url,omitempty"`
 	ThumbURL string `json:"thumb_url,omitempty"`
 }
 
 // RedditDetailedPost represents a single Reddit post with full details.
 type RedditDetailedPost struct {
-	ID          string          `json:"id,omitempty"`
-	Title       string          `json:"title,omitempty"`
-	URL         string          `json:"url,omitempty"`
-	Subreddit   string          `json:"subreddit,omitempty"`
-	Score       int             `json:"score,omitempty"`
-	Impressions int             `json:"impressions,omitempty"` // view_count or score fallback
-	CreatedAt   string          `json:"created_at,omitempty"`
+	ID          string            `json:"id,omitempty"`
+	Title       string            `json:"title,omitempty"`
+	URL         string            `json:"url,omitempty"`
+	Subreddit   string            `json:"subreddit,omitempty"`
+	Score       int               `json:"score,omitempty"`
+	Impressions int               `json:"impressions,omitempty"` // view_count or score fallback
+	CreatedAt   string            `json:"created_at,omitempty"`
 	Media       []RedditPostMedia `json:"media,omitempty"`
 }
 
@@ -795,6 +795,7 @@ type RedditDetailedPostsResponse struct {
 // WebhookEventType represents the type of a webhook event.
 type WebhookEventType string
 
+// Webhook event type constants sent by the Upload-Post platform.
 const (
 	WebhookEventUploadCompleted             WebhookEventType = "upload_completed"
 	WebhookEventSocialAccountConnected      WebhookEventType = "social_account_connected"

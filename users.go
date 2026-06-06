@@ -119,7 +119,7 @@ func (c *Client) UpdateUserPreferences(ctx context.Context, opts UserPreferences
 // GetNotificationConfig returns the current webhook/notification configuration.
 func (c *Client) GetNotificationConfig(ctx context.Context) (*NotificationConfig, error) {
 	var raw struct {
-		Success bool              `json:"success"`
+		Success bool                `json:"success"`
 		Config  *NotificationConfig `json:"config,omitempty"`
 	}
 	if err := c.getJSON(ctx, "/uploadposts/notification-config", nil, &raw); err != nil {

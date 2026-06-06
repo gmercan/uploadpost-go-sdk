@@ -23,16 +23,16 @@ func (c *Client) UploadVideo(ctx context.Context, videoPathOrURL string, opts Vi
 	}
 
 	addCommonParams(fb, commonParams{
-		User:           opts.User,
-		Title:          opts.Title,
-		Platforms:      opts.Platforms,
-		FirstComment:   opts.FirstComment,
-		AltText:        opts.AltText,
-		ScheduledDate:  opts.ScheduledDate,
-		Timezone:       opts.Timezone,
-		AddToQueue:     opts.AddToQueue,
-		MaxPostsPerSlot: opts.MaxPostsPerSlot,
-		AsyncUpload:    opts.AsyncUpload,
+		User:              opts.User,
+		Title:             opts.Title,
+		Platforms:         opts.Platforms,
+		FirstComment:      opts.FirstComment,
+		AltText:           opts.AltText,
+		ScheduledDate:     opts.ScheduledDate,
+		Timezone:          opts.Timezone,
+		AddToQueue:        opts.AddToQueue,
+		MaxPostsPerSlot:   opts.MaxPostsPerSlot,
+		AsyncUpload:       opts.AsyncUpload,
 		FirstCommentMedia: opts.FirstCommentMedia,
 
 		BlueskyTitle:   opts.BlueskyTitle,
@@ -128,16 +128,16 @@ func (c *Client) UploadPhotos(ctx context.Context, photosPathsOrURLs []string, o
 	}
 
 	addCommonParams(fb, commonParams{
-		User:           opts.User,
-		Title:          opts.Title,
-		Platforms:      opts.Platforms,
-		FirstComment:   opts.FirstComment,
-		AltText:        opts.AltText,
-		ScheduledDate:  opts.ScheduledDate,
-		Timezone:       opts.Timezone,
-		AddToQueue:     opts.AddToQueue,
-		MaxPostsPerSlot: opts.MaxPostsPerSlot,
-		AsyncUpload:    opts.AsyncUpload,
+		User:              opts.User,
+		Title:             opts.Title,
+		Platforms:         opts.Platforms,
+		FirstComment:      opts.FirstComment,
+		AltText:           opts.AltText,
+		ScheduledDate:     opts.ScheduledDate,
+		Timezone:          opts.Timezone,
+		AddToQueue:        opts.AddToQueue,
+		MaxPostsPerSlot:   opts.MaxPostsPerSlot,
+		AsyncUpload:       opts.AsyncUpload,
 		FirstCommentMedia: opts.FirstCommentMedia,
 
 		BlueskyTitle:   opts.BlueskyTitle,
@@ -230,12 +230,12 @@ func (c *Client) UploadText(ctx context.Context, opts TextOptions) (*UploadRespo
 		Title:     opts.Title,
 		Platforms: opts.Platforms,
 
-		FirstComment:  opts.FirstComment,
-		ScheduledDate: opts.ScheduledDate,
-		Timezone:      opts.Timezone,
-		AddToQueue:    opts.AddToQueue,
-		MaxPostsPerSlot: opts.MaxPostsPerSlot,
-		AsyncUpload:   opts.AsyncUpload,
+		FirstComment:      opts.FirstComment,
+		ScheduledDate:     opts.ScheduledDate,
+		Timezone:          opts.Timezone,
+		AddToQueue:        opts.AddToQueue,
+		MaxPostsPerSlot:   opts.MaxPostsPerSlot,
+		AsyncUpload:       opts.AsyncUpload,
 		FirstCommentMedia: opts.FirstCommentMedia,
 
 		BlueskyTitle:  opts.BlueskyTitle,
@@ -343,13 +343,13 @@ type commonParams struct {
 	Title     string
 	Platforms []string
 
-	FirstComment  string
-	AltText       string
-	ScheduledDate string
-	Timezone      string
-	AddToQueue    *bool
-	MaxPostsPerSlot *int
-	AsyncUpload   *bool
+	FirstComment      string
+	AltText           string
+	ScheduledDate     string
+	Timezone          string
+	AddToQueue        *bool
+	MaxPostsPerSlot   *int
+	AsyncUpload       *bool
 	FirstCommentMedia []string
 
 	BlueskyTitle   string
@@ -560,4 +560,3 @@ func addThreadsParams(fb *formBuilder, longTextAsPost *bool, mediaLayout, topicT
 	fb.setIfNotEmpty("threads_thread_media_layout", mediaLayout)
 	fb.setIfNotEmpty("threads_topic_tag", topicTag)
 }
-
