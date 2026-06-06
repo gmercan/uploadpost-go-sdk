@@ -104,11 +104,20 @@ func extractErrorMessage(m map[string]json.RawMessage) string {
 
 // doRaw executes an HTTP request and returns the raw response body.
 func (c *Client) doRaw(ctx context.Context, method, endpoint string, body io.Reader, contentType string) ([]byte, int, error) {
+	return c.doRawWithAuth(ctx, method, endpoint, body, contentType, "Apikey "+c.apiKey)
+}
+
+// doRawBearer is like doRaw but uses Bearer token authorization.
+func (c *Client) doRawBearer(ctx context.Context, method, endpoint string, body io.Reader, contentType, token string) ([]byte, int, error) {
+	return c.doRawWithAuth(ctx, method, endpoint, body, contentType, "Bearer "+token)
+}
+
+func (c *Client) doRawWithAuth(ctx context.Context, method, endpoint string, body io.Reader, contentType, authHeader string) ([]byte, int, error) {
 	req, err := http.NewRequestWithContext(ctx, method, c.baseURL+endpoint, body)
 	if err != nil {
 		return nil, 0, err
 	}
-	req.Header.Set("Authorization", "Apikey "+c.apiKey)
+	req.Header.Set("Authorization", authHeader)
 	req.Header.Set("X-Upload-Post-Source", sdkSource)
 	if contentType != "" {
 		req.Header.Set("Content-Type", contentType)
@@ -122,6 +131,29 @@ func (c *Client) doRaw(ctx context.Context, method, endpoint string, body io.Rea
 
 	data, err := io.ReadAll(resp.Body)
 	return data, resp.StatusCode, err
+}
+
+// postJSONBearer performs a POST with Bearer auth (used for JWT-authenticated endpoints).
+func (c *Client) postJSONBearer(ctx context.Context, endpoint, token string, payload interface{}, dest interface{}) error {
+	data, err := json.Marshal(payload)
+	if err != nil {
+		return err
+	}
+	raw, statusCode, err := c.doRawBearer(ctx, http.MethodPost, endpoint, bytes.NewReader(data), "application/json", token)
+	if err != nil {
+		return err
+	}
+	if statusCode >= 400 {
+		var m map[string]json.RawMessage
+		if json.Unmarshal(raw, &m) == nil {
+			return &APIError{StatusCode: statusCode, Message: extractErrorMessage(m)}
+		}
+		return &APIError{StatusCode: statusCode, Message: string(raw)}
+	}
+	if dest != nil {
+		return json.Unmarshal(raw, dest)
+	}
+	return nil
 }
 
 // doJSON executes a request and unmarshals the JSON response into dest.

@@ -653,3 +653,207 @@ type SimpleResponse struct {
 	Success bool   `json:"success"`
 	Message string `json:"message,omitempty"`
 }
+
+// CurrentUser is returned by GetCurrentUser (GET /uploadposts/me).
+type CurrentUser struct {
+	Success     bool                   `json:"success"`
+	Message     string                 `json:"message,omitempty"`
+	Email       string                 `json:"email,omitempty"`
+	Plan        string                 `json:"plan,omitempty"`
+	Preferences map[string]interface{} `json:"preferences,omitempty"`
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Queue types
+// ─────────────────────────────────────────────────────────────────────────────
+
+// QueueSlot defines a single posting slot (hour + minute within a day).
+type QueueSlot struct {
+	Hour   int `json:"hour"`   // 0-23
+	Minute int `json:"minute"` // 0-59
+}
+
+// QueueSettings represents the queue configuration for a profile.
+type QueueSettings struct {
+	Timezone        string      `json:"timezone,omitempty"`
+	Slots           []QueueSlot `json:"slots,omitempty"`
+	DaysOfWeek      []int       `json:"days_of_week,omitempty"` // 0=Monday … 6=Sunday
+	MaxPostsPerSlot int         `json:"max_posts_per_slot,omitempty"`
+	FullSlots       []string    `json:"full_slots,omitempty"` // ISO 8601 datetimes
+}
+
+// QueueSettingsResponse is returned by GetQueueSettings.
+type QueueSettingsResponse struct {
+	Success  bool          `json:"success"`
+	Settings QueueSettings `json:"settings,omitempty"`
+}
+
+// QueueSlotPreview represents a single upcoming queue slot in a preview.
+type QueueSlotPreview struct {
+	SlotDatetime    string      `json:"slot_datetime,omitempty"` // ISO 8601 UTC
+	PostCount       int         `json:"post_count"`
+	MaxPostsPerSlot int         `json:"max_posts_per_slot,omitempty"`
+	IsFull          bool        `json:"is_full"`
+	ManuallyFull    bool        `json:"manually_full"`
+	ScheduledPosts  interface{} `json:"scheduled_posts,omitempty"`
+}
+
+// QueuePreviewResponse is returned by PreviewQueue.
+type QueuePreviewResponse struct {
+	Success bool               `json:"success"`
+	Slots   []QueueSlotPreview `json:"slots,omitempty"`
+}
+
+// NextQueueSlotResponse is returned by GetNextQueueSlot.
+type NextQueueSlotResponse struct {
+	Success   bool    `json:"success"`
+	NextSlot  *string `json:"next_slot"` // null when no slot available within 30 days
+}
+
+// UpdateQueueSettingsOptions contains options for UpdateQueueSettings.
+type UpdateQueueSettingsOptions struct {
+	ProfileUsername string
+	Timezone        string
+	Slots           []QueueSlot
+	DaysOfWeek      []int
+	MaxPostsPerSlot *int
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// DM types
+// ─────────────────────────────────────────────────────────────────────────────
+
+// DMConversationParticipant holds info about one participant in a conversation.
+type DMConversationParticipant struct {
+	ID       string `json:"id,omitempty"`
+	Username string `json:"username,omitempty"`
+}
+
+// DMMessage is a recent message within a conversation.
+type DMMessage struct {
+	ID        string `json:"id,omitempty"`
+	Text      string `json:"text,omitempty"`
+	Timestamp string `json:"timestamp,omitempty"`
+	FromMe    bool   `json:"from_me"`
+}
+
+// DMConversation represents a single DM conversation thread.
+type DMConversation struct {
+	ID           string                      `json:"id,omitempty"`
+	Participants []DMConversationParticipant `json:"participants,omitempty"`
+	LastMessage  *DMMessage                  `json:"last_message,omitempty"`
+	UpdatedAt    string                      `json:"updated_at,omitempty"`
+}
+
+// DMConversationsResponse is returned by ListDMConversations.
+type DMConversationsResponse struct {
+	Success       bool             `json:"success"`
+	Conversations []DMConversation `json:"conversations,omitempty"`
+}
+
+// SendDMResponse is returned by SendDirectMessage.
+type SendDMResponse struct {
+	Success   bool   `json:"success"`
+	MessageID string `json:"message_id,omitempty"`
+	Message   string `json:"message,omitempty"`
+	Error     string `json:"error,omitempty"`
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Reddit types
+// ─────────────────────────────────────────────────────────────────────────────
+
+// RedditPostMedia holds media details for a Reddit post.
+type RedditPostMedia struct {
+	Type     string `json:"type,omitempty"`      // image | video | external_video
+	URL      string `json:"url,omitempty"`
+	ThumbURL string `json:"thumb_url,omitempty"`
+}
+
+// RedditDetailedPost represents a single Reddit post with full details.
+type RedditDetailedPost struct {
+	ID          string          `json:"id,omitempty"`
+	Title       string          `json:"title,omitempty"`
+	URL         string          `json:"url,omitempty"`
+	Subreddit   string          `json:"subreddit,omitempty"`
+	Score       int             `json:"score,omitempty"`
+	Impressions int             `json:"impressions,omitempty"` // view_count or score fallback
+	CreatedAt   string          `json:"created_at,omitempty"`
+	Media       []RedditPostMedia `json:"media,omitempty"`
+}
+
+// RedditDetailedPostsResponse is returned by ListRedditDetailedPosts.
+type RedditDetailedPostsResponse struct {
+	Success bool                 `json:"success"`
+	Posts   []RedditDetailedPost `json:"posts,omitempty"`
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Webhook event types
+// ─────────────────────────────────────────────────────────────────────────────
+
+// WebhookEventType represents the type of a webhook event.
+type WebhookEventType string
+
+const (
+	WebhookEventUploadCompleted             WebhookEventType = "upload_completed"
+	WebhookEventSocialAccountConnected      WebhookEventType = "social_account_connected"
+	WebhookEventSocialAccountDisconnected   WebhookEventType = "social_account_disconnected"
+	WebhookEventSocialAccountReauthRequired WebhookEventType = "social_account_reauth_required"
+)
+
+// WebhookUploadResult holds the per-platform outcome of an upload_completed event.
+type WebhookUploadResult struct {
+	Success   bool   `json:"success"`
+	URL       string `json:"url,omitempty"`
+	PublishID string `json:"publish_id,omitempty"`
+	Error     string `json:"error,omitempty"`
+}
+
+// WebhookUploadCompleted is the payload for the upload_completed event.
+type WebhookUploadCompleted struct {
+	Event           WebhookEventType    `json:"event"`
+	JobID           string              `json:"job_id,omitempty"`
+	UserEmail       string              `json:"user_email,omitempty"`
+	ProfileUsername string              `json:"profile_username,omitempty"`
+	Platform        string              `json:"platform,omitempty"`
+	MediaType       string              `json:"media_type,omitempty"`
+	Title           string              `json:"title,omitempty"`
+	Caption         string              `json:"caption,omitempty"`
+	Result          WebhookUploadResult `json:"result,omitempty"`
+	CreatedAt       string              `json:"created_at,omitempty"`
+}
+
+// WebhookSocialAccountConnected is the payload for the social_account_connected event.
+type WebhookSocialAccountConnected struct {
+	Event           WebhookEventType `json:"event"`
+	UserEmail       string           `json:"user_email,omitempty"`
+	Platform        string           `json:"platform,omitempty"`
+	AccountName     string           `json:"account_name,omitempty"`
+	Status          string           `json:"status,omitempty"` // "connected"
+	ProfileUsername string           `json:"profile_username,omitempty"`
+	CreatedAt       string           `json:"created_at,omitempty"`
+}
+
+// WebhookSocialAccountDisconnected is the payload for social_account_disconnected.
+type WebhookSocialAccountDisconnected struct {
+	Event           WebhookEventType `json:"event"`
+	UserEmail       string           `json:"user_email,omitempty"`
+	Platform        string           `json:"platform,omitempty"`
+	AccountName     string           `json:"account_name,omitempty"`
+	Status          string           `json:"status,omitempty"`
+	Reason          string           `json:"reason,omitempty"` // manual_disconnect | account_blocked | token_refresh_threshold_exceeded | max_auth_strikes
+	ProfileUsername string           `json:"profile_username,omitempty"`
+	CreatedAt       string           `json:"created_at,omitempty"`
+}
+
+// WebhookSocialAccountReauthRequired is the payload for social_account_reauth_required.
+type WebhookSocialAccountReauthRequired struct {
+	Event           WebhookEventType `json:"event"`
+	UserEmail       string           `json:"user_email,omitempty"`
+	Platform        string           `json:"platform,omitempty"`
+	AccountName     string           `json:"account_name,omitempty"`
+	Status          string           `json:"status,omitempty"` // "reauth_required"
+	ProfileUsername string           `json:"profile_username,omitempty"`
+	CreatedAt       string           `json:"created_at,omitempty"`
+}

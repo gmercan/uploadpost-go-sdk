@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"net/url"
 )
 
 // ListUsers returns all profiles associated with the API key.
@@ -74,10 +75,11 @@ func (c *Client) GenerateJWT(ctx context.Context, username string, opts JWTOptio
 	return &resp, nil
 }
 
-// ValidateJWT validates an existing JWT token.
+// ValidateJWT validates an existing JWT token. Per the API spec, this endpoint
+// uses Bearer token authorization instead of the standard Apikey header.
 func (c *Client) ValidateJWT(ctx context.Context, jwt string) (*SimpleResponse, error) {
 	var resp SimpleResponse
-	if err := c.postJSON(ctx, "/uploadposts/users/validate-jwt", map[string]string{"jwt": jwt}, &resp); err != nil {
+	if err := c.postJSONBearer(ctx, "/uploadposts/users/validate-jwt", jwt, nil, &resp); err != nil {
 		return nil, err
 	}
 	return &resp, nil
@@ -127,6 +129,31 @@ func (c *Client) GetNotificationConfig(ctx context.Context) (*NotificationConfig
 		return &NotificationConfig{}, nil
 	}
 	return raw.Config, nil
+}
+
+// GetUserProfile returns a single profile by username.
+func (c *Client) GetUserProfile(ctx context.Context, username string) (*UserProfile, error) {
+	if username == "" {
+		return nil, fmt.Errorf("uploadpost: username is required")
+	}
+	var raw struct {
+		Success bool        `json:"success"`
+		Profile UserProfile `json:"profile,omitempty"`
+	}
+	if err := c.getJSON(ctx, "/uploadposts/users/"+url.PathEscape(username), nil, &raw); err != nil {
+		return nil, err
+	}
+	return &raw.Profile, nil
+}
+
+// GetCurrentUser validates the API key and returns account info (email, plan,
+// preferences).
+func (c *Client) GetCurrentUser(ctx context.Context) (*CurrentUser, error) {
+	var resp CurrentUser
+	if err := c.getJSON(ctx, "/uploadposts/me", nil, &resp); err != nil {
+		return nil, err
+	}
+	return &resp, nil
 }
 
 // UpdateNotificationConfig updates the webhook/notification configuration.

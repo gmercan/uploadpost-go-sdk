@@ -31,7 +31,7 @@ func (c *Client) StartAutoDM(ctx context.Context, opts AutoDMOptions) (*SimpleRe
 	}
 
 	var resp SimpleResponse
-	if err := c.postJSON(ctx, "/autodms", payload, &resp); err != nil {
+	if err := c.postJSON(ctx, "/uploadposts/autodms", payload, &resp); err != nil {
 		return nil, err
 	}
 	return &resp, nil
@@ -46,7 +46,7 @@ func (c *Client) GetAutoDMStatus(ctx context.Context, includeInactive bool) (*Au
 	}
 
 	var resp AutoDMStatusResponse
-	if err := c.getJSON(ctx, "/autodms", params, &resp); err != nil {
+	if err := c.getJSON(ctx, "/uploadposts/autodms", params, &resp); err != nil {
 		return nil, err
 	}
 	return &resp, nil
@@ -54,8 +54,11 @@ func (c *Client) GetAutoDMStatus(ctx context.Context, includeInactive bool) (*Au
 
 // GetAutoDMLogs returns the activity log for a specific AutoDM monitor.
 func (c *Client) GetAutoDMLogs(ctx context.Context, monitorID string) (*AutoDMLogsResponse, error) {
+	if monitorID == "" {
+		return nil, fmt.Errorf("uploadpost: monitorID is required")
+	}
 	var resp AutoDMLogsResponse
-	if err := c.getJSON(ctx, "/autodms/logs", map[string]string{
+	if err := c.getJSON(ctx, "/uploadposts/autodms/logs", map[string]string{
 		"monitor_id": monitorID,
 	}, &resp); err != nil {
 		return nil, err
@@ -65,36 +68,50 @@ func (c *Client) GetAutoDMLogs(ctx context.Context, monitorID string) (*AutoDMLo
 
 // PauseAutoDM temporarily pauses a running monitor.
 func (c *Client) PauseAutoDM(ctx context.Context, monitorID string) (*SimpleResponse, error) {
+	if monitorID == "" {
+		return nil, fmt.Errorf("uploadpost: monitorID is required")
+	}
 	var resp SimpleResponse
-	if err := c.postJSON(ctx, "/autodms/pause", map[string]string{"monitor_id": monitorID}, &resp); err != nil {
+	if err := c.postJSON(ctx, "/uploadposts/autodms/pause", map[string]string{"monitor_id": monitorID}, &resp); err != nil {
 		return nil, err
 	}
 	return &resp, nil
 }
 
-// ResumeAutoDM resumes a paused monitor.
+// ResumeAutoDM resumes a paused monitor. Monitoring continues from where it
+// left off.
 func (c *Client) ResumeAutoDM(ctx context.Context, monitorID string) (*SimpleResponse, error) {
+	if monitorID == "" {
+		return nil, fmt.Errorf("uploadpost: monitorID is required")
+	}
 	var resp SimpleResponse
-	if err := c.postJSON(ctx, "/autodms/resume", map[string]string{"monitor_id": monitorID}, &resp); err != nil {
+	if err := c.postJSON(ctx, "/uploadposts/autodms/resume", map[string]string{"monitor_id": monitorID}, &resp); err != nil {
 		return nil, err
 	}
 	return &resp, nil
 }
 
-// StopAutoDM deactivates a monitor (data is preserved, can be re-listed with
-// includeInactive=true).
+// StopAutoDM deactivates a monitor. Data is preserved; the monitor will appear
+// in GetAutoDMStatus when includeInactive=true.
 func (c *Client) StopAutoDM(ctx context.Context, monitorID string) (*SimpleResponse, error) {
+	if monitorID == "" {
+		return nil, fmt.Errorf("uploadpost: monitorID is required")
+	}
 	var resp SimpleResponse
-	if err := c.postJSON(ctx, "/autodms/stop", map[string]string{"monitor_id": monitorID}, &resp); err != nil {
+	if err := c.postJSON(ctx, "/uploadposts/autodms/stop", map[string]string{"monitor_id": monitorID}, &resp); err != nil {
 		return nil, err
 	}
 	return &resp, nil
 }
 
-// DeleteAutoDM permanently deletes a monitor and all its data.
+// DeleteAutoDM permanently deletes a monitor and all its data. This action
+// cannot be undone.
 func (c *Client) DeleteAutoDM(ctx context.Context, monitorID string) (*SimpleResponse, error) {
+	if monitorID == "" {
+		return nil, fmt.Errorf("uploadpost: monitorID is required")
+	}
 	var resp SimpleResponse
-	if err := c.deleteJSON(ctx, "/autodms", map[string]string{"monitor_id": monitorID}, &resp); err != nil {
+	if err := c.postJSON(ctx, "/uploadposts/autodms/delete", map[string]string{"monitor_id": monitorID}, &resp); err != nil {
 		return nil, err
 	}
 	return &resp, nil
