@@ -31,3 +31,6 @@ Thumbs.db
 # Environment
 .env
 *.env
+
+# Serena (AI assistant internal files)
+.serena/

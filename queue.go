@@ -24,29 +24,46 @@ func (c *Client) GetQueueSettings(ctx context.Context, profileUsername string) (
 // DaysOfWeek uses 0=Monday … 6=Sunday. Slot hours must be 0-23, minutes 0-59.
 // At most 24 slots are allowed. MaxPostsPerSlot must be 1-100.
 func (c *Client) UpdateQueueSettings(ctx context.Context, opts UpdateQueueSettingsOptions) (*SimpleResponse, error) {
+	if err := validateQueueSettingsOptions(opts); err != nil {
+		return nil, err
+	}
+	payload := buildQueueSettingsPayload(opts)
+	var resp SimpleResponse
+	if err := c.postJSON(ctx, "/uploadposts/queue/settings", payload, &resp); err != nil {
+		return nil, err
+	}
+	return &resp, nil
+}
+
+// validateQueueSettingsOptions checks that all fields in opts are within their allowed ranges.
+func validateQueueSettingsOptions(opts UpdateQueueSettingsOptions) error {
 	if opts.ProfileUsername == "" {
-		return nil, fmt.Errorf("uploadpost: UpdateQueueSettingsOptions.ProfileUsername is required")
+		return fmt.Errorf("uploadpost: UpdateQueueSettingsOptions.ProfileUsername is required")
 	}
 	if len(opts.Slots) > 24 {
-		return nil, fmt.Errorf("uploadpost: at most 24 queue slots are allowed (got %d)", len(opts.Slots))
+		return fmt.Errorf("uploadpost: at most 24 queue slots are allowed (got %d)", len(opts.Slots))
 	}
 	for _, s := range opts.Slots {
 		if s.Hour < 0 || s.Hour > 23 {
-			return nil, fmt.Errorf("uploadpost: slot hour must be 0-23 (got %d)", s.Hour)
+			return fmt.Errorf("uploadpost: slot hour must be 0-23 (got %d)", s.Hour)
 		}
 		if s.Minute < 0 || s.Minute > 59 {
-			return nil, fmt.Errorf("uploadpost: slot minute must be 0-59 (got %d)", s.Minute)
+			return fmt.Errorf("uploadpost: slot minute must be 0-59 (got %d)", s.Minute)
 		}
 	}
 	for _, d := range opts.DaysOfWeek {
 		if d < 0 || d > 6 {
-			return nil, fmt.Errorf("uploadpost: days_of_week values must be 0-6 (got %d)", d)
+			return fmt.Errorf("uploadpost: days_of_week values must be 0-6 (got %d)", d)
 		}
 	}
 	if opts.MaxPostsPerSlot != nil && (*opts.MaxPostsPerSlot < 1 || *opts.MaxPostsPerSlot > 100) {
-		return nil, fmt.Errorf("uploadpost: max_posts_per_slot must be 1-100 (got %d)", *opts.MaxPostsPerSlot)
+		return fmt.Errorf("uploadpost: max_posts_per_slot must be 1-100 (got %d)", *opts.MaxPostsPerSlot)
 	}
+	return nil
+}
 
+// buildQueueSettingsPayload constructs the request body for UpdateQueueSettings.
+func buildQueueSettingsPayload(opts UpdateQueueSettingsOptions) map[string]interface{} {
 	payload := map[string]interface{}{
 		"profile_username": opts.ProfileUsername,
 	}
@@ -62,12 +79,7 @@ func (c *Client) UpdateQueueSettings(ctx context.Context, opts UpdateQueueSettin
 	if opts.MaxPostsPerSlot != nil {
 		payload["max_posts_per_slot"] = *opts.MaxPostsPerSlot
 	}
-
-	var resp SimpleResponse
-	if err := c.postJSON(ctx, "/uploadposts/queue/settings", payload, &resp); err != nil {
-		return nil, err
-	}
-	return &resp, nil
+	return payload
 }
 
 // PreviewQueue returns the upcoming queue slots for a profile.
