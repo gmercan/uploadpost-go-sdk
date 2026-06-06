@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"log"
 
-	uploadpost "github.com/GokhanMERCANOGLU/upload-post-go-sdk"
+	uploadpost "github.com/gmercan/uploadpost-go-sdk"
 )
 
 func main() {

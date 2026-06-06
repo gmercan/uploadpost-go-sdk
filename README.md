@@ -1,11 +1,11 @@
 # upload-post-go-sdk
 
 > **Unofficial** Go SDK for the [Upload-Post API](https://www.upload-post.com).  
-> Created and maintained by **[GokhanMERCANOGLU](https://github.com/GokhanMERCANOGLU)** as an open-source project.  
+> Created and maintained by **[Gokhan MERCANOGLU](https://github.com/gmercan)** as an open-source project.  
 > This package is not affiliated with or endorsed by Upload-Post.
 
-[![Go Reference](https://pkg.go.dev/badge/github.com/GokhanMERCANOGLU/upload-post-go-sdk.svg)](https://pkg.go.dev/github.com/GokhanMERCANOGLU/upload-post-go-sdk)
-[![Go Report Card](https://goreportcard.com/badge/github.com/GokhanMERCANOGLU/upload-post-go-sdk)](https://goreportcard.com/report/github.com/GokhanMERCANOGLU/upload-post-go-sdk)
+[![Go Reference](https://pkg.go.dev/badge/github.com/gmercan/uploadpost-go-sdk.svg)](https://pkg.go.dev/github.com/gmercan/uploadpost-go-sdk)
+[![Go Report Card](https://goreportcard.com/badge/github.com/gmercan/uploadpost-go-sdk)](https://goreportcard.com/report/github.com/gmercan/uploadpost-go-sdk)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 Upload videos, photos, text posts, and documents to **TikTok, Instagram, YouTube, LinkedIn, Facebook, Pinterest, Threads, Reddit, Bluesky, and X (Twitter)** with a single API call — no external dependencies, pure Go stdlib.
@@ -70,7 +70,7 @@ Upload videos, photos, text posts, and documents to **TikTok, Instagram, YouTube
 ## Installation
 
 ```bash
-go get github.com/GokhanMERCANOGLU/upload-post-go-sdk
+go get github.com/gmercan/uploadpost-go-sdk
 ```
 
 ---
@@ -85,7 +85,7 @@ import (
     "fmt"
     "log"
 
-    uploadpost "github.com/GokhanMERCANOGLU/upload-post-go-sdk"
+    uploadpost "github.com/gmercan/uploadpost-go-sdk"
 )
 
 func main() {
@@ -303,7 +303,7 @@ resp, err = client.UploadText(ctx, uploadpost.TextOptions{
     Platforms:       []string{"reddit"},
     Title:           "Check out this Go SDK for Upload-Post",
     RedditSubreddit: "golang",
-    RedditLinkURL:   "https://github.com/GokhanMERCANOGLU/upload-post-go-sdk",
+    RedditLinkURL:   "https://github.com/gmercan/uploadpost-go-sdk",
 })
 
 // LinkedIn company page post with link preview
@@ -920,7 +920,7 @@ opts := uploadpost.VideoOptions{
 
 ## License
 
-MIT © [GokhanMERCANOGLU](https://github.com/GokhanMERCANOGLU)
+MIT © [GokhanMERCANOGLU](https://github.com/gmercan)
 
 See [LICENSE](LICENSE) for the full text.
 

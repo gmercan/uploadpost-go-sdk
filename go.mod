@@ -1,3 +1,3 @@
-module github.com/GokhanMERCANOGLU/upload-post-go-sdk
+module github.com/gmercan/uploadpost-go-sdk
 
 go 1.21
