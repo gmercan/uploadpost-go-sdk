@@ -1,0 +1,15 @@
+# Normalize line endings to LF in the repository
+* text=auto eol=lf
+
+# Go source files
+*.go text eol=lf
+
+# Configs and docs
+*.md text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.mod text eol=lf
+*.sum text eol=lf
+.gitignore text eol=lf
+.gitattributes text eol=lf
+LICENSE text eol=lf
