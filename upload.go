@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	"strconv"
-	"strings"
 )
 
 // UploadVideo uploads a video file or URL to one or more social media platforms.
@@ -58,6 +57,7 @@ func (c *Client) UploadVideo(ctx context.Context, videoPathOrURL string, opts Vi
 		XFirstComment:         opts.XFirstComment,
 		ThreadsFirstComment:   opts.ThreadsFirstComment,
 		YoutubeFirstComment:   opts.YoutubeFirstComment,
+		RedditFirstComment:    opts.RedditFirstComment,
 		BlueskyFirstComment:   opts.BlueskyFirstComment,
 		LinkedinFirstComment:  opts.LinkedinFirstComment,
 	})
@@ -269,11 +269,7 @@ func (c *Client) UploadText(ctx context.Context, opts TextOptions) (*UploadRespo
 			fb.setIfNotEmpty("linkedin_link_url", linkURL)
 		case "facebook":
 			fb.setIfNotEmpty("facebook_page_id", opts.FacebookPageID)
-			linkURL := opts.FacebookLinkURL
-			if linkURL == "" {
-				linkURL = opts.LinkURL
-			}
-			fb.setIfNotEmpty("facebook_link_url", linkURL)
+			fb.setIfNotEmpty("facebook_link_url", opts.FacebookLinkURL)
 		case "x":
 			addXTextParams(fb, opts)
 		case "threads":
@@ -499,6 +495,7 @@ func addYoutubeParams(fb *formBuilder, opts VideoOptions) error {
 
 func addPinterestVideoParams(fb *formBuilder, opts VideoOptions) {
 	fb.setIfNotEmpty("pinterest_board_id", opts.PinterestBoardID)
+	fb.setIfNotEmpty("pinterest_alt_text", opts.PinterestAltText)
 	fb.setIfNotEmpty("pinterest_link", opts.PinterestLink)
 	fb.setIfNotEmpty("pinterest_cover_image_url", opts.PinterestCoverImageURL)
 	fb.setIfNotEmpty("pinterest_cover_image_content_type", opts.PinterestCoverImageContentType)
@@ -564,18 +561,3 @@ func addThreadsParams(fb *formBuilder, longTextAsPost *bool, mediaLayout, topicT
 	fb.setIfNotEmpty("threads_topic_tag", topicTag)
 }
 
-// splitCommaSep splits a comma-separated string, trimming spaces.
-// Kept here as a utility used internally.
-func splitCommaSep(s string) []string {
-	if s == "" {
-		return nil
-	}
-	parts := strings.Split(s, ",")
-	out := make([]string, 0, len(parts))
-	for _, p := range parts {
-		if t := strings.TrimSpace(p); t != "" {
-			out = append(out, t)
-		}
-	}
-	return out
-}

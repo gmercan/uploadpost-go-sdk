@@ -61,6 +61,7 @@ type VideoOptions struct {
 	XFirstComment         string
 	ThreadsFirstComment   string
 	YoutubeFirstComment   string
+	RedditFirstComment    string
 	BlueskyFirstComment   string
 	LinkedinFirstComment  string
 
@@ -115,6 +116,7 @@ type VideoOptions struct {
 
 	// ── Pinterest ─────────────────────────────────────────────────────────────
 	PinterestBoardID              string
+	PinterestAltText              string
 	PinterestLink                 string
 	PinterestCoverImageURL        string
 	PinterestCoverImageContentType string
